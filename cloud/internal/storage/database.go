@@ -1,13 +1,24 @@
 package database
 
-import "database/sql"
+import (
+	"database/sql"
+	"log"
+)
 
-type Storage struct {
+type Repositiry struct {
 	database *sql.DB
+	log      *log.Logger
 }
 
-func CreateNewStorage(db *sql.DB) *Storage {
-	return &Storage{
+func CreateNewRepository(db *sql.DB, logger *log.Logger) *Repositiry {
+	return &Repositiry{
 		database: db,
+		log:      logger,
 	}
+}
+
+// !FIXME Create Connection to database
+func (r *Repositiry) Connect() *sql.DB {
+	var database *sql.DB
+	return database
 }

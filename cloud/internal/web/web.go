@@ -21,4 +21,5 @@ func CreateWebController(service *service.GRPCService, app *fiber.App, logger *l
 	}
 }
 
+// !FIXME Create Routes
 func (wc *WebController) RegisterRoutes() {}
