@@ -1,0 +1,28 @@
+syntax = "proto3";
+package memorycloud;
+option go_package = "memorycloud/proto/gen/";
+
+import "google/protobuf/timestamp.proto";
+
+service MemoryCloud {
+    rpc Create (CreateRequest) returns (Response);
+    rpc Delete (DeleteRequest) returns (Response);
+}
+
+message CreateRequest {
+    int64 UserID = 1;
+    string FilePath = 2;
+    string FileWeight = 3;
+    google.protobuf.Timestamp Date = 4;
+}
+
+message DeleteRequest {
+    int64 UserID = 1;
+    string FileName = 2;
+}
+
+message Response {
+    string Status = 1;
+    string RemainingWeight = 2;
+}
+
