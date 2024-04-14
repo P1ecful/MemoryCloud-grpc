@@ -2,23 +2,30 @@ package database
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
+	"memorycloud/cloud/internal/config"
 )
 
-type Repositiry struct {
-	database *sql.DB
-	log      *log.Logger
+type Repository struct {
+	config *config.PostgresConnection
+	log    *log.Logger
 }
 
-func CreateNewRepository(db *sql.DB, logger *log.Logger) *Repositiry {
-	return &Repositiry{
-		database: db,
-		log:      logger,
+func CreateNewRepository(cfg *config.PostgresConnection, logger *log.Logger) *Repository {
+	return &Repository{
+		config: cfg,
+		log:    logger,
 	}
 }
 
-// !FIXME Create Connection to database
-func (r *Repositiry) Connect() *sql.DB {
-	var database *sql.DB
-	return database
+func (r *Repository) Connect() *sql.DB {
+	db, err := sql.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+		r.config.Host, r.config.Port, r.config.Username, r.config.Password, r.config.Database))
+
+	if err != nil {
+		r.log.Fatal(err)
+	}
+
+	return db
 }
